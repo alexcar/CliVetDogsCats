@@ -2,9 +2,13 @@
 {
     public class Product : BaseEntity
     {
+        public Product()
+        {
+            
+        }
         public Product(
             string code, string name, string description, decimal costValue, 
-            int profitMargin, decimal saleValue, int stockQuantity)
+            int profitMargin, decimal saleValue, int stockQuantity, Guid categoryId, Guid brandId)
         {
             Code = code;
             Name = name;
@@ -13,6 +17,8 @@
             ProfitMargin = profitMargin;
             SaleValue = saleValue;
             StockQuantity = stockQuantity;
+            CategoryId = categoryId;
+            BrandId = brandId;
         }
 
         public string Code { get; set; }
@@ -27,5 +33,6 @@
         public Category Category { get; set; } = new Category();
         public Guid BrandId { get; set; }
         public Brand Brand { get; set; } = new Brand();
+        public IEnumerable<ProductEntry> ProductsEntry { get; set; } = new List<ProductEntry>();
     }
 }

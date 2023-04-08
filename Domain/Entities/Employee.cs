@@ -38,6 +38,8 @@
         public Guid? WorkShiftId { get; set; }
         public WorkShift? WorkShift { get; set; } = new WorkShift();
 
+        public IEnumerable<ProductEntryHeader> ProductsEntryHeader { get; set; } = new List<ProductEntryHeader>();
+
         public void AddAddress(Address address)
         {
             Address = address;

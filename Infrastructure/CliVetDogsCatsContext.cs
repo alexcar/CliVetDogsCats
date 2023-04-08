@@ -32,5 +32,7 @@ namespace Infrastructure
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<ProductEntryHeader> ProductEntryHeaders { get; set; }
+        public DbSet<ProductEntry> ProductEntries { get; set; }
     }
 }

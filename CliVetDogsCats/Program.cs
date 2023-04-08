@@ -28,6 +28,10 @@ builder.Services.AddDbContext<CliVetDogsCatsContext>(options =>
 
 builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
 
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(options =>

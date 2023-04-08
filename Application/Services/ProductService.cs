@@ -40,8 +40,9 @@ namespace Application.Services
 
             var response = new ProductResponse(
                 product.Id, product.Code, product.Name, product.Description, product.CostValue,
-                product.ProfitMargin, product.SaleValue, product.StockQuantity, product.CategoryId,
-                product.BrandId, product.Active);
+                product.ProfitMargin, product.SaleValue, product.StockQuantity, 
+                new CategoryResponse(product.Category.Id, product.Category.Name),                
+                new BrandResponse(product.Brand.Id, product.Brand.Name), product.Active);
 
             return response;
         }
@@ -53,7 +54,8 @@ namespace Application.Services
                     $"Já existe um producto cadastrado como o código: {request.Code}");
 
             var product = new Product(request.Code, request.Name, request.Description,
-                request.CostValue, request.ProfitMargin, request.SaleValue, request.StockQuantity);
+                request.CostValue, request.ProfitMargin, request.SaleValue, request.StockQuantity,
+                request.Category.Id, request.Brand.Id);
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -61,7 +63,8 @@ namespace Application.Services
             var response = new ProductResponse(
                 product.Id, product.Code, product.Name, product.Description, product.CostValue,
                 product.ProfitMargin, product.SaleValue, product.StockQuantity,
-                product.CategoryId, product.BrandId, product.Active);
+                new CategoryResponse(request.Category.Id, request.Category.Name), 
+                new BrandResponse(request.Brand.Id, request.Brand.Name), product.Active);
 
             return response;
         }
@@ -88,8 +91,8 @@ namespace Application.Services
             product.ProfitMargin = request.ProfitMargin;
             product.SaleValue = request.SaleValue;  
             product.StockQuantity = request.StockQuantity;
-            product.CategoryId = request.CategoryId;
-            product.BrandId = request.BrandId;
+            product.CategoryId = request.Category.Id;
+            product.BrandId = request.Brand.Id;
             product.Active = request.Active;
 
             _context.Products.Update(product);
@@ -104,8 +107,8 @@ namespace Application.Services
                 product.ProfitMargin,
                 product.SaleValue,
                 product.StockQuantity,
-                product.CategoryId,
-                product.BrandId,
+                new CategoryResponse(request.Category.Id, request.Category.Name),
+                new BrandResponse(request.Brand.Id, request.Brand.Name),
                 product.Active);
 
             return response;
