@@ -6,14 +6,14 @@
         {
             
         }
-        public ProductEntry(decimal? costValue, int? quantity)
+        public ProductEntry(decimal costValue, int quantity)
         {
             CostValue = costValue;
             Quantity = quantity;
         }
 
-        public decimal? CostValue { get; private set; }
-        public int? Quantity { get; private set; }
+        public decimal CostValue { get; private set; }
+        public int Quantity { get; private set; }
 
         public Guid ProductEntryHeaderId { get; set; }
         public ProductEntryHeader ProductEntryHeader { get; set; } = new ProductEntryHeader();

@@ -6,6 +6,7 @@ using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Application.Services
 {
@@ -33,6 +34,10 @@ namespace Application.Services
         {
             var product = await _context.Products.Include("Category").Include("Brand")
                 .Where(x => x.Active == true && x.Id == id)
+                .Select(p => new ProductResponse(
+                    p.Id, p.Code, p.Name, p.Description, p.CostValue, p.ProfitMargin, p.SaleValue, p.StockQuantity, 
+                    new CategoryResponse(p.Category.Id, p.Category.Name), 
+                    new BrandResponse(p.Brand.Id, p.Brand.Name), p.Active))
                 .AsNoTracking().FirstOrDefaultAsync();
 
             if (product is null)
@@ -45,6 +50,19 @@ namespace Application.Services
                 new BrandResponse(product.Brand.Id, product.Brand.Name), product.Active);
 
             return response;
+        }
+
+        public async Task<ProductEntryResponse?> GetByCodeAsync(string code)
+        {
+            var product = await _context.Products.Include("Category").Include("Brand")
+                .Where(x => x.Code == code)
+                .Select(p => new ProductEntryResponse(p.Id, p.Code, p.Name, p.Category.Name, p.Brand.Name, p.CostValue))
+                .AsNoTracking().FirstOrDefaultAsync();
+
+            if (product is null)
+                throw new EntityNotFoundException($"O produto com o código: {code} não existe.");
+
+            return product;
         }
 
         public async Task<ProductResponse> CreateAsync(CreateProductRequest request)

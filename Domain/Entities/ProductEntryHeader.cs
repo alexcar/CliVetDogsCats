@@ -7,12 +7,15 @@
             
         }
 
-        public ProductEntryHeader(string? code)
+        public ProductEntryHeader(string code, Guid employeeId, Guid supplierId, IEnumerable<ProductEntry> productsEntry)
         {
             Code = code;
+            EmployeeId = employeeId;
+            SupplierId = supplierId;
+            ProductsEntry = productsEntry;
         }
 
-        public string? Code { get; private set; }
+        public string Code { get; private set; }
         public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; } = new Employee();
         public Guid SupplierId { get; set; }
