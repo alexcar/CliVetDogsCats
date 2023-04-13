@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CliVetDogsCats.API.Controllers
 {
-    [Route("api/[productEntries]")]
+    [Route("api/productEntries")]
     [ApiController]
     public class ProductEntryController : ControllerBase
     {

@@ -31,7 +31,8 @@ namespace Application.Services
 
         public async Task<SupplierResponse?> GetByIdAsync(Guid id)
         {
-            var supplier = await _context.Suppliers.Where(x => x.Id == id && x.Active == true)
+            var supplier = await _context.Suppliers.Include("Address")
+                .Where(x => x.Id == id && x.Active == true)
                 .AsNoTracking().FirstOrDefaultAsync();
 
             if (supplier == null)
