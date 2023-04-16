@@ -25,8 +25,10 @@ namespace Application.Services
         {            
             var response = await _context.Employees
                 .Where(x => x.Active == true)
+                .OrderBy(x => x.Name)
                 .Select(p => new EmployeeListResponse(
-                    p.Id, p.Name, p.Cpf, p.CellPhone, p.IsVeterinarian)).AsNoTracking().ToListAsync();                   
+                    p.Id, p.Name, p.Cpf, p.CellPhone, p.IsVeterinarian))                
+                .AsNoTracking().ToListAsync();                   
             
             return response;
         }

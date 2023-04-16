@@ -25,8 +25,9 @@ namespace Application.Services
         {
             return await _context.Products.Include("Category").Include("Brand")
                 .Where(x => x.Active == true)
+                .OrderBy(x => x.Category.Name).ThenBy(x => x.Brand.Name).ThenBy(x => x.Name)
                 .Select(p => new ProductListResponse(
-                    p.Id, p.Name, p.Brand.Name, p.Category.Name, p.CostValue, p.SaleValue))
+                    p.Id, p.Name, p.Brand.Name, p.Category.Name, p.CostValue, p.SaleValue))                
                 .AsNoTracking().ToListAsync();
         }
 

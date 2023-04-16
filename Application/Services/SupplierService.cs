@@ -25,7 +25,8 @@ namespace Application.Services
         {
             return await _context.Suppliers
                 .Where(x => x.Active == true)
-                .Select(p => new SupplierListResponse(p.Id, p.Trade, p.Cnpj, p.Contact, p.CellPhone))
+                .OrderBy(x => x.Trade)
+                .Select(p => new SupplierListResponse(p.Id, p.Trade, p.Cnpj, p.Contact, p.CellPhone))                
                 .AsNoTracking().ToListAsync();
         }
 

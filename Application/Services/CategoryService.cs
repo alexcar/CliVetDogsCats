@@ -21,7 +21,8 @@ namespace Application.Services
         {
             return await _context.Categories
                 .Where(x => x.Active == true)
-                .Select(p => new CategoryResponse(p.Id, p.Name))
+                .OrderBy(x => x.Name)
+                .Select(p => new CategoryResponse(p.Id, p.Name))                
                 .AsNoTracking().ToListAsync();
         }
     }

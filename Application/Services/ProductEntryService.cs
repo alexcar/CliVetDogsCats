@@ -25,8 +25,9 @@ namespace Application.Services
         {
             var response = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier").Include("ProductEntry")
                 .Where(x => x.Active == true)
+                .OrderBy(x => x.Code)
                 .Select(x => new ProductEntryHeaderListResponse(x.Id, x.Code, x.Employee.Name, x.Supplier.Name, x.CreatedDate, 
-                    x.ProductsEntry.Sum(p => p.Quantity * p.CostValue)))
+                    x.ProductsEntry.Sum(p => p.Quantity * p.CostValue)))                
                 .AsNoTracking().ToListAsync();
 
             // https://learn.microsoft.com/en-us/ef/core/querying/complex-query-operators
