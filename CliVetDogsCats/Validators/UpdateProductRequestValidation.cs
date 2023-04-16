@@ -30,10 +30,10 @@ namespace CliVetDogsCats.API.Validators
             RuleFor(model => model.StockQuantity).NotEmpty()
                    .WithMessage("Uma quantidade de estoque do produto é obrigatório");
 
-            RuleFor(model => model.Category.Id).NotEmpty()
+            RuleFor(model => model.CategoryId).NotEmpty()
                    .WithMessage("Uma categoria do produto é obrigatório");
 
-            RuleFor(model => model.Brand.Id).NotEmpty()
+            RuleFor(model => model.BrandId).NotEmpty()
                    .WithMessage("Uma marca do produto é obrigatório");
         }
     }

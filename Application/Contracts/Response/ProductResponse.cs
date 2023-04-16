@@ -1,13 +1,11 @@
-﻿using Domain.Entities;
-
-namespace Application.Contracts.Response
+﻿namespace Application.Contracts.Response
 {
     public class ProductResponse
     {
         public ProductResponse(
             Guid id, string code, string name, string description, 
             decimal costValue, int profitMargin, decimal saleValue, 
-            int stockQuantity, CategoryResponse category, BrandResponse brand, bool? active)
+            int stockQuantity, Guid categoryId, Guid brandId, bool? active)
         {
             Id = id;
             Code = code;
@@ -17,8 +15,8 @@ namespace Application.Contracts.Response
             ProfitMargin = profitMargin;
             SaleValue = saleValue;
             StockQuantity = stockQuantity;
-            Category = category;
-            Brand = brand;
+            CategoryId = categoryId;
+            BrandId = brandId;
             Active = active;
         }
 
@@ -30,8 +28,8 @@ namespace Application.Contracts.Response
         public int ProfitMargin { get; }
         public decimal SaleValue { get; }
         public int StockQuantity { get; }
-        public CategoryResponse Category { get; }
-        public BrandResponse Brand { get; }
+        public Guid CategoryId { get; }
+        public Guid BrandId { get; }
         public bool? Active { get; }
     }
 }

@@ -13,6 +13,8 @@
         }
 
         public string Name { get; set; }
-        IEnumerable<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; } = new Category();
     }
 }

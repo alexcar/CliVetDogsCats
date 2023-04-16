@@ -14,6 +14,7 @@
             Name = name;
         }
 
-        IEnumerable<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; } = new List<Product>();
+        public IEnumerable<Brand> Brands { get; set;} = new List<Brand>();
     }
 }

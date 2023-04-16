@@ -1,6 +1,6 @@
 ﻿using Application.Contracts.Request;
 using Application.Contracts.Response;
-using Application.Services;
+using Application.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +10,12 @@ namespace CliVetDogsCats.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ProductService _service;
+        private readonly IProductService _service;
         private readonly IValidator<CreateProductRequest> _createValidator;
         private readonly IValidator<UpdateProductRequest> _updateValidate;
 
         public ProductController(
-            ProductService service, 
+            IProductService service, 
             IValidator<CreateProductRequest> createValidator, 
             IValidator<UpdateProductRequest> updateValidate)
         {
@@ -49,7 +49,7 @@ namespace CliVetDogsCats.API.Controllers
                 return BadRequest(errors);
             }
 
-            var result = _service.CreateAsync(request);
+            var result = await _service.CreateAsync(request);
 
             return Ok(result);
         }
@@ -67,7 +67,7 @@ namespace CliVetDogsCats.API.Controllers
                 return BadRequest(errors);
             }
 
-            var result = _service.UpdateAsync(request);
+            var result = await _service.UpdateAsync(request);
 
             return Ok(result);
         }

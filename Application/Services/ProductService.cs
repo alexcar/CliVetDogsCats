@@ -32,12 +32,18 @@ namespace Application.Services
 
         public async Task<ProductResponse?> GetByIdAsync(Guid id)
         {
-            var product = await _context.Products.Include("Category").Include("Brand")
+            //var product = await _context.Products.Include("Category").Include("Brand")
+            //    .Where(x => x.Active == true && x.Id == id)
+            //    .Select(p => new ProductResponse(
+            //        p.Id, p.Code, p.Name, p.Description, p.CostValue, p.ProfitMargin, p.SaleValue, p.StockQuantity,
+            //        p.CategoryId, p.BrandId, p.Active))
+            //    .AsNoTracking().FirstOrDefaultAsync();
+
+            var product = await _context.Products
                 .Where(x => x.Active == true && x.Id == id)
                 .Select(p => new ProductResponse(
                     p.Id, p.Code, p.Name, p.Description, p.CostValue, p.ProfitMargin, p.SaleValue, p.StockQuantity, 
-                    new CategoryResponse(p.Category.Id, p.Category.Name), 
-                    new BrandResponse(p.Brand.Id, p.Brand.Name), p.Active))
+                    p.CategoryId, p.BrandId, p.Active))
                 .AsNoTracking().FirstOrDefaultAsync();
 
             if (product is null)
@@ -46,8 +52,7 @@ namespace Application.Services
             var response = new ProductResponse(
                 product.Id, product.Code, product.Name, product.Description, product.CostValue,
                 product.ProfitMargin, product.SaleValue, product.StockQuantity, 
-                new CategoryResponse(product.Category.Id, product.Category.Name),                
-                new BrandResponse(product.Brand.Id, product.Brand.Name), product.Active);
+                product.CategoryId, product.BrandId, product.Active);
 
             return response;
         }
@@ -73,7 +78,7 @@ namespace Application.Services
 
             var product = new Product(request.Code, request.Name, request.Description,
                 request.CostValue, request.ProfitMargin, request.SaleValue, request.StockQuantity,
-                request.Category.Id, request.Brand.Id);
+                request.CategoryId, request.BrandId);
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -81,8 +86,7 @@ namespace Application.Services
             var response = new ProductResponse(
                 product.Id, product.Code, product.Name, product.Description, product.CostValue,
                 product.ProfitMargin, product.SaleValue, product.StockQuantity,
-                new CategoryResponse(request.Category.Id, request.Category.Name), 
-                new BrandResponse(request.Brand.Id, request.Brand.Name), product.Active);
+                request.CategoryId, request.BrandId, product.Active);
 
             return response;
         }
@@ -99,7 +103,7 @@ namespace Application.Services
             {
                 if (await CodeAlreadyRegistered(request.Code))
                     throw new PropertyBadRequestException(
-                        $"Já existe um producto cadastrado como o código: {request.Code}");
+                        $"Já existe um producto cadastrado com o código: {request.Code}");
             }
 
             product.Code = request.Code;
@@ -109,8 +113,8 @@ namespace Application.Services
             product.ProfitMargin = request.ProfitMargin;
             product.SaleValue = request.SaleValue;  
             product.StockQuantity = request.StockQuantity;
-            product.CategoryId = request.Category.Id;
-            product.BrandId = request.Brand.Id;
+            product.CategoryId = request.CategoryId;
+            product.BrandId = request.BrandId;
             product.Active = request.Active;
 
             _context.Products.Update(product);
@@ -125,8 +129,8 @@ namespace Application.Services
                 product.ProfitMargin,
                 product.SaleValue,
                 product.StockQuantity,
-                new CategoryResponse(request.Category.Id, request.Category.Name),
-                new BrandResponse(request.Brand.Id, request.Brand.Name),
+                request.CategoryId,
+                request.BrandId,
                 product.Active);
 
             return response;

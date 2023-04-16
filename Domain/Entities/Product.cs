@@ -30,9 +30,9 @@
         public int StockQuantity { get; set; }
 
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; } = new Category();
+        public Category Category { get; set; }
         public Guid BrandId { get; set; }
-        public Brand Brand { get; set; } = new Brand();
+        public Brand Brand { get; set; }
         public IEnumerable<ProductEntry> ProductsEntry { get; set; } = new List<ProductEntry>();
     }
 }

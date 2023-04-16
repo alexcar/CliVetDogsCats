@@ -1,4 +1,4 @@
-﻿using Application.Services;
+﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CliVetDogsCats.API.Controllers
@@ -7,9 +7,9 @@ namespace CliVetDogsCats.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly CategoryService _service;
+        private readonly ICategoryService _service;
 
-        public CategoryController(CategoryService service)
+        public CategoryController(ICategoryService service)
         {
             _service = service;
         }

@@ -1,4 +1,4 @@
-﻿using Application.Services;
+﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CliVetDogsCats.API.Controllers
@@ -7,9 +7,9 @@ namespace CliVetDogsCats.API.Controllers
     [ApiController]
     public class BrandController : ControllerBase
     {
-        private readonly BrandService _service;
+        private readonly IBrandService _service;
 
-        public BrandController(BrandService service)
+        public BrandController(IBrandService service)
         {
             _service = service;
         }
@@ -18,6 +18,12 @@ namespace CliVetDogsCats.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _service.GetAllAsync());
+        }
+
+        [HttpGet("{categoryId:guid}")]
+        public async Task<IActionResult> GetByCategoryId(Guid categoryId)
+        {
+            return Ok(await _service.GetByCategoryIdAsync(categoryId));
         }
     }
 }

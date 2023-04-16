@@ -21,5 +21,13 @@ namespace Application.Services
                 .Select(p => new BrandResponse(p.Id, p.Name))
                 .AsNoTracking().ToListAsync();
         }
+
+        public async Task<List<BrandResponse>?> GetByCategoryIdAsync(Guid categoryId)
+        {
+            return await _context.Brands
+                .Where(x => x.CategoryId == categoryId && x.Active == true)
+                .Select(p => new BrandResponse(p.Id, p.Name))
+                .AsNoTracking().ToListAsync();
+        }
     }
 }
