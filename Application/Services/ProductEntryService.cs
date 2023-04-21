@@ -7,6 +7,7 @@ using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace Application.Services
 {
@@ -51,26 +52,28 @@ namespace Application.Services
                 throw new PropertyBadRequestException("É obrigatório informar pelo menos um produto.");
 
             var productEntryHeader = new ProductEntryHeader(request.Code, request.EmployeeId, request.SupplierId,
-                request.ProductsEntry.Select(p => new ProductEntry(p.CostValue, p.Quantity)));            
-            
-            foreach(var item in request.ProductsEntry) 
-            { 
-                UpdateStock(item.ProductId, item.Quantity);
-            }
+                request.ProductsEntry.Select(p => new ProductEntry(p.ProductId, p.CostValue, p.Quantity)));
 
             await _context.ProductEntryHeaders.AddAsync(productEntryHeader);
+
+            foreach (var item in request.ProductsEntry) 
+            {
+                var product = _context.Products.Where(x => x.Id == item.ProductId).FirstOrDefault();
+
+                if (product is null)
+                    throw new EntityNotFoundException($"O produto com o ID: {item.ProductId} não existe.");
+
+                // Update cost value                
+                if (product.CostValue != item.CostValue)
+                    product.CostValue = item.CostValue;
+
+                // update stock
+                product.StockQuantity += item.Quantity;
+
+                _context.Products.Update(product);
+            }            
+            
             await _context.SaveChangesAsync();
-        }
-
-        private void UpdateStock(Guid productId, int quantity)
-        {
-            var product = _context.Products.Where(x => x.Id == productId).FirstOrDefault();
-
-            if (product is null)
-                throw new EntityNotFoundException($"O produto com o ID: {productId} não existe.");
-
-            product.StockQuantity += quantity;
-            _context.Products.Update(product);
-        }
+        }        
     }
 }

@@ -11,20 +11,29 @@ namespace CliVetDogsCats.API.Controllers
     public class ProductEntryController : ControllerBase
     {
         private readonly ProductEntryService _service;
+        private readonly ProductService _productService;
         private readonly IValidator<CreateProductEntryHeaderRequest> _createValidator;
 
         public ProductEntryController(
-            ProductEntryService service, 
+            ProductEntryService service,
+            ProductService productService,
             IValidator<CreateProductEntryHeaderRequest> createValidator)
         {
             _service = service;
             _createValidator = createValidator;
+            _productService = productService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _service.GetAllAsync());
+        }
+
+        [HttpGet]        
+        public async Task<IActionResult> GetByCode(string code)
+        {
+            return Ok(await _productService.GetByCodeAsync(code));
         }
 
         [HttpPost]

@@ -6,8 +6,9 @@
         {
             
         }
-        public ProductEntry(decimal costValue, int quantity)
+        public ProductEntry(Guid productId, decimal costValue, int quantity)
         {
+            ProductId = productId;
             CostValue = costValue;
             Quantity = quantity;
         }
