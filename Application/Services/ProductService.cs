@@ -50,23 +50,30 @@ namespace Application.Services
             if (product is null)
                 throw new EntityNotFoundException($"O produto com o ID: {id} não existe.");
 
-            var response = new ProductResponse(
-                product.Id, product.Code, product.Name, product.Description, product.CostValue,
-                product.ProfitMargin, product.SaleValue, product.StockQuantity, 
-                product.CategoryId, product.BrandId, product.Active);
+            //var response = new ProductResponse(
+            //    product.Id, product.Code, product.Name, product.Description, product.CostValue,
+            //    product.ProfitMargin, product.SaleValue, product.StockQuantity, 
+            //    product.CategoryId, product.BrandId, product.Active);
 
-            return response;
+            return product;
         }
 
-        public async Task<ProductEntryResponse?> GetByCodeAsync(string code)
+        public async Task<ProductResponse?> GetByCodeAsync(string code)
         {
-            var product = await _context.Products.Include("Category").Include("Brand")
-                .Where(x => x.Code == code)
-                .Select(p => new ProductEntryResponse(p.Id, p.Code, p.Name, p.Category.Name, p.Brand.Name, p.CostValue))
+            var product = await _context.Products
+                .Where(x => x.Active == true && x.Code == code)
+                .Select(p => new ProductResponse(
+                    p.Id, p.Code, p.Name, p.Description, p.CostValue, p.ProfitMargin, p.SaleValue, p.StockQuantity,
+                    p.CategoryId, p.BrandId, p.Active))
                 .AsNoTracking().FirstOrDefaultAsync();
 
             if (product is null)
                 throw new EntityNotFoundException($"O produto com o código: {code} não existe.");
+
+            //var response = new ProductResponse(
+            //    product.Id, product.Code, product.Name, product.Description, product.CostValue,
+            //    product.ProfitMargin, product.SaleValue, product.StockQuantity,
+            //    product.CategoryId, product.BrandId, product.Active);
 
             return product;
         }

@@ -2,12 +2,10 @@
 using Application.Contracts.Response;
 using Application.Exceptions;
 using Application.Interfaces;
-using Azure.Core;
 using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace Application.Services
 {
@@ -44,6 +42,39 @@ namespace Application.Services
             //            select new { productEntryHeader }
 
             return response;
+        }
+
+        public async Task<ProductEntryHeaderResponse?> GetByCodeAsync(string code)
+        {
+            var productEntryHeader = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier").Include("ProductEntry")
+                .Where(x => x.Active == true && x.Code == code)
+                .OrderBy(x => x.Code)
+                .Select(x => new ProductEntryHeaderResponse(x.Id, x.Code, x.Employee.Id, x.Supplier.Id,
+                    x.ProductsEntry
+                        .Select(p => new ProductEntryResponse(
+                            p.Id, 
+                            p.ProductEntryHeaderId, 
+                            p.ProductId, p.Product.Code, p.Product.Name, p.CostValue, p.Quantity)).ToList()
+                ))
+                .AsNoTracking().FirstOrDefaultAsync();
+
+            if (productEntryHeader is null)
+                throw new EntityNotFoundException($"A entrada de produtos com o código: {code} não existe.");
+
+            return productEntryHeader;
+        }
+
+        public async Task<ProductCodeEntryResponse?> GetProductByCodeAsync(string code)
+        {
+            var product = await _context.Products.Include("Category").Include("Brand")
+                .Where(x => x.Code == code)
+                .Select(p => new ProductCodeEntryResponse(p.Id, p.Code, p.Name, p.Category.Name, p.Brand.Name, p.CostValue))
+                .AsNoTracking().FirstOrDefaultAsync();
+
+            if (product is null)
+                throw new EntityNotFoundException($"O produto com o código: {code} não existe.");
+
+            return product;
         }
 
         public async Task ProductEntryAddAsync(CreateProductEntryHeaderRequest request)

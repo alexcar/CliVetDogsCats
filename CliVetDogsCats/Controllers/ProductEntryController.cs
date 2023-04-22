@@ -30,10 +30,10 @@ namespace CliVetDogsCats.API.Controllers
             return Ok(await _service.GetAllAsync());
         }
 
-        [HttpGet]        
-        public async Task<IActionResult> GetByCode(string code)
+        [HttpGet("getProductByCode/{code}")]
+        public async Task<IActionResult> GetProductByCode(string code)
         {
-            return Ok(await _productService.GetByCodeAsync(code));
+            return Ok(await _service.GetProductByCodeAsync(code));
         }
 
         [HttpPost]

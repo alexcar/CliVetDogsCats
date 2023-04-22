@@ -7,7 +7,7 @@ namespace Application.Interfaces
     {
         public Task<List<ProductListResponse>?> GetAllAsync();
         public Task<ProductResponse?> GetByIdAsync(Guid id);        
-        public Task<ProductEntryResponse?> GetByCodeAsync(string code);
+        public Task<ProductResponse?> GetByCodeAsync(string code);
         public Task<ProductResponse> CreateAsync(CreateProductRequest request);
         public Task<ProductResponse> UpdateAsync(UpdateProductRequest request);
         public Task DeleteAsync(Guid id);

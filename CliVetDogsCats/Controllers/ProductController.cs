@@ -36,6 +36,12 @@ namespace CliVetDogsCats.API.Controllers
             return Ok(await _service.GetByIdAsync(id));
         }
 
+        [HttpGet("getByCode/{code}")]
+        public async Task<IActionResult> GetByCode(string code)
+        {
+            return Ok(await _service.GetByCodeAsync(code));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductRequest request) 
         { 

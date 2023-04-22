@@ -1,10 +1,33 @@
 ﻿namespace Application.Contracts.Response
 {
-    
-    // utilizado para visualizar quando o usuário digitar o código do produto na entrada de produto
-    public record ProductEntryResponse(
-        Guid Id, 
-        string Code, string Name, 
-        string CategoryName, string BrandName, decimal CostValue);
-    
+    public class ProductEntryResponse
+    {
+        public ProductEntryResponse(
+            Guid id, 
+            Guid productEntryHeaderId, 
+            Guid productId, 
+            string code, 
+            string name, 
+            decimal costValue, 
+            int quantity)
+        {
+            Id = id;
+            ProductEntryHeaderId = productEntryHeaderId;
+            ProductId = productId;
+            Code = code;
+            Name = name;
+            CostValue = costValue;
+            Quantity = quantity;
+        }
+
+        public Guid Id { get; private set; }
+        public Guid ProductEntryHeaderId { get; private set; }
+        public Guid ProductId { get; private set; }
+        public string Code { get; private set; }
+        public string Name { get; private set; }
+        public decimal CostValue { get; private set; }
+        public int Quantity { get; private set; }
+
+
+    }
 }
