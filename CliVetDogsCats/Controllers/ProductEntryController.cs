@@ -1,6 +1,6 @@
 ﻿using Application.Contracts.Request;
 using Application.Contracts.Response;
-using Application.Services;
+using Application.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,18 +10,15 @@ namespace CliVetDogsCats.API.Controllers
     [ApiController]
     public class ProductEntryController : ControllerBase
     {
-        private readonly ProductEntryService _service;
-        private readonly ProductService _productService;
+        private readonly IProductEntryService _service;
         private readonly IValidator<CreateProductEntryHeaderRequest> _createValidator;
 
         public ProductEntryController(
-            ProductEntryService service,
-            ProductService productService,
+            IProductEntryService service,
             IValidator<CreateProductEntryHeaderRequest> createValidator)
         {
             _service = service;
             _createValidator = createValidator;
-            _productService = productService;
         }
 
         [HttpGet]

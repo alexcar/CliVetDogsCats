@@ -22,7 +22,7 @@ namespace Application.Services
 
         public async Task<List<ProductEntryHeaderListResponse>> GetAllAsync()
         {
-            var response = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier").Include("ProductEntry")
+            var response = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier")
                 .Where(x => x.Active == true)
                 .OrderBy(x => x.Code)
                 .Select(x => new ProductEntryHeaderListResponse(x.Id, x.Code, x.Employee.Name, x.Supplier.Name, x.CreatedDate, 
