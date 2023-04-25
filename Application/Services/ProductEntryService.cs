@@ -26,7 +26,7 @@ namespace Application.Services
                 .Where(x => x.Active == true)
                 .OrderBy(x => x.Code)
                 .Select(x => new ProductEntryHeaderListResponse(x.Id, x.Code, x.Employee.Name, x.Supplier.Name, x.CreatedDate, 
-                    x.ProductsEntry.Sum(p => p.Quantity * p.CostValue)))                
+                x.TransactionType == "+" ? "Entrada" : "Saída", x.ProductsEntry.Sum(p => p.Quantity * p.CostValue)))                
                 .AsNoTracking().ToListAsync();
 
             // https://learn.microsoft.com/en-us/ef/core/querying/complex-query-operators
@@ -82,7 +82,7 @@ namespace Application.Services
             if (!request.ProductsEntry.Any())
                 throw new PropertyBadRequestException("É obrigatório informar pelo menos um produto.");
 
-            var productEntryHeader = new ProductEntryHeader(request.Code, request.EmployeeId, request.SupplierId,
+            var productEntryHeader = new ProductEntryHeader(request.Code, request.TransactionType, request.EmployeeId, request.SupplierId,
                 request.ProductsEntry.Select(p => new ProductEntry(p.ProductId, p.CostValue, p.Quantity)));
 
             await _context.ProductEntryHeaders.AddAsync(productEntryHeader);
@@ -99,7 +99,10 @@ namespace Application.Services
                     product.CostValue = item.CostValue;
 
                 // update stock
-                product.StockQuantity += item.Quantity;
+                if (request.TransactionType == "+")
+                    product.StockQuantity += item.Quantity;
+                else 
+                    product.StockQuantity -= item.Quantity;
 
                 _context.Products.Update(product);
             }            

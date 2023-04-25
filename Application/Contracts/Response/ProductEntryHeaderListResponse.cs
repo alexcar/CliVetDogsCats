@@ -6,5 +6,6 @@
         string EmployeeName, 
         string SupplierName, 
         DateTime? Date, 
+        string TransactionType,
         decimal TotalValue);
 }

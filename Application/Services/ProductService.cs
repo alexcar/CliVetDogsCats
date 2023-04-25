@@ -43,7 +43,7 @@ namespace Application.Services
             var product = await _context.Products
                 .Where(x => x.Active == true && x.Id == id)
                 .Select(p => new ProductResponse(
-                    p.Id, p.Code, p.Name, p.Description, p.CostValue, p.ProfitMargin, p.SaleValue, p.StockQuantity, 
+                    p.Id, p.Code, p.Name, p.Description, Math.Round(p.CostValue, 2), p.ProfitMargin, p.SaleValue, p.StockQuantity, 
                     p.CategoryId, p.BrandId, p.Active))
                 .AsNoTracking().FirstOrDefaultAsync();
 
