@@ -24,7 +24,7 @@ namespace Application.Services
         {
             var response = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier")
                 .Where(x => x.Active == true)
-                .OrderBy(x => x.Code)
+                .OrderByDescending(x => x.CreatedDate)
                 .Select(x => new ProductEntryHeaderListResponse(x.Id, x.Code, x.Employee.Name, x.Supplier.Name, x.CreatedDate, 
                 x.TransactionType == "+" ? "Entrada" : "Saída", x.ProductsEntry.Sum(p => p.Quantity * p.CostValue)))                
                 .AsNoTracking().ToListAsync();
@@ -82,10 +82,11 @@ namespace Application.Services
             if (!request.ProductsEntry.Any())
                 throw new PropertyBadRequestException("É obrigatório informar pelo menos um produto.");
 
-            var productEntryHeader = new ProductEntryHeader(request.Code, request.TransactionType, request.EmployeeId, request.SupplierId,
-                request.ProductsEntry.Select(p => new ProductEntry(p.ProductId, p.CostValue, p.Quantity)));
+            var productEntryHeader = new ProductEntryHeader(
+                request.Code, request.TransactionType, request.EmployeeId, request.SupplierId,
+                request.ProductsEntry.Select(p => new ProductEntry(p.ProductId, p.CostValue, p.Quantity)).ToList());
 
-            await _context.ProductEntryHeaders.AddAsync(productEntryHeader);
+            await _context.ProductEntryHeaders.AddAsync(productEntryHeader);            
 
             foreach (var item in request.ProductsEntry) 
             {
@@ -104,9 +105,9 @@ namespace Application.Services
                 else 
                     product.StockQuantity -= item.Quantity;
 
-                _context.Products.Update(product);
-            }            
-            
+                _context.Products.Update(product);                
+            }
+
             await _context.SaveChangesAsync();
         }        
     }

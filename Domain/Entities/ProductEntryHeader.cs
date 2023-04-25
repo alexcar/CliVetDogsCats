@@ -19,9 +19,9 @@
         public string Code { get; private set; }
         public Guid EmployeeId { get; set; }
         public string TransactionType { get; private set; }
-        public Employee Employee { get; set; } = new Employee();
+        public Employee Employee { get; set; }
         public Guid SupplierId { get; set; }
-        public Supplier Supplier { get; set; } = new Supplier();
+        public Supplier Supplier { get; set; }
         public IEnumerable<ProductEntry> ProductsEntry { get; set; } = new List<ProductEntry>();
     }
 }

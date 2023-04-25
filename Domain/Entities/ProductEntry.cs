@@ -17,8 +17,8 @@
         public int Quantity { get; private set; }
 
         public Guid ProductEntryHeaderId { get; set; }
-        public ProductEntryHeader ProductEntryHeader { get; set; } = new ProductEntryHeader();
+        public ProductEntryHeader ProductEntryHeader { get; set; }
         public Guid ProductId { get; set; }
-        public Product Product { get; set; } = new Product();
+        public Product Product { get; set; }
     }
 }
