@@ -13,8 +13,8 @@
             Quantity = quantity;
         }
 
-        public decimal CostValue { get; private set; }
-        public int Quantity { get; private set; }
+        public decimal CostValue { get; set; }
+        public int Quantity { get; set; }
 
         public Guid ProductEntryHeaderId { get; set; }
         public ProductEntryHeader ProductEntryHeader { get; set; }

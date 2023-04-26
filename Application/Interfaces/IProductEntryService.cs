@@ -5,9 +5,10 @@ namespace Application.Interfaces
 {
     public interface IProductEntryService
     {
-        Task<List<ProductEntryHeaderListResponse>> GetAllAsync();
+        public Task<List<ProductEntryHeaderListResponse>> GetAllAsync();
+        public Task<ProductEntryHeaderListResponse?> GetByIdAsync(Guid id);
         public Task<ProductCodeEntryResponse?> GetProductByCodeAsync(string code);
-        Task<ProductEntryHeaderResponse?> GetByCodeAsync(string code);
-        Task ProductEntryAddAsync(CreateProductEntryHeaderRequest request);
+        public Task<ProductEntryHeaderResponse?> GetByCodeAsync(string code);
+        public Task ProductEntryAddAsync(CreateProductEntryHeaderRequest request);
     }
 }

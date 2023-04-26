@@ -27,6 +27,12 @@ namespace CliVetDogsCats.API.Controllers
             return Ok(await _service.GetAllAsync());
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            return Ok(await _service.GetByIdAsync(id));
+        }
+
         [HttpGet("getProductByCode/{code}")]
         public async Task<IActionResult> GetProductByCode(string code)
         {

@@ -9,7 +9,8 @@
             string code, 
             string name, 
             decimal costValue, 
-            int quantity)
+            int quantity,
+            decimal subTotal)
         {
             Id = id;
             ProductEntryHeaderId = productEntryHeaderId;
@@ -18,6 +19,7 @@
             Name = name;
             CostValue = costValue;
             Quantity = quantity;
+            SubTotal = subTotal;
         }
 
         public Guid Id { get; private set; }
@@ -27,7 +29,7 @@
         public string Name { get; private set; }
         public decimal CostValue { get; private set; }
         public int Quantity { get; private set; }
-
+        public decimal SubTotal { get; private set; }
 
     }
 }

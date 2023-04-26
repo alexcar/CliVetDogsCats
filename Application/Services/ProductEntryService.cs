@@ -25,8 +25,13 @@ namespace Application.Services
             var response = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier")
                 .Where(x => x.Active == true)
                 .OrderByDescending(x => x.CreatedDate)
-                .Select(x => new ProductEntryHeaderListResponse(x.Id, x.Code, x.Employee.Name, x.Supplier.Name, x.CreatedDate, 
-                x.TransactionType == "+" ? "Entrada" : "Saída", x.ProductsEntry.Sum(p => p.Quantity * p.CostValue)))                
+                .Select(x => new ProductEntryHeaderListResponse(
+                    x.Id, x.Code, x.Employee.Name, 
+                    x.SupplierId,
+                    x.Supplier.Name, 
+                    x.CreatedDate, 
+                    x.TransactionType,
+                    x.TransactionType == "+" ? "Entrada" : "Saída", x.ProductsEntry.Sum(p => p.Quantity * p.CostValue), null))
                 .AsNoTracking().ToListAsync();
 
             // https://learn.microsoft.com/en-us/ef/core/querying/complex-query-operators
@@ -44,6 +49,44 @@ namespace Application.Services
             return response;
         }
 
+        public async Task<ProductEntryHeaderListResponse?> GetByIdAsync(Guid id)
+        {
+            var query = await _context.ProductEntryHeaders
+                    // .Include(x => x.ProductsEntry)
+                    .Include(x => x.Supplier)
+                    .Include(x => x.Employee)
+                .Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+
+            var productsEntry = await _context.ProductEntries.Where(x => x.ProductEntryHeaderId == id).ToListAsync();            
+            
+            foreach(var item in productsEntry)
+            {
+                var product = await _context.Products.Where(x => x.Id == item.ProductId).FirstOrDefaultAsync();
+                
+                if (product != null)
+                    item.Product = product;
+            }
+
+            var productEntryHeaderList = new ProductEntryHeaderListResponse(
+                    query.Id, query.Code, query.Employee.Name, 
+                    query.SupplierId,
+                    query.Supplier.Name, 
+                    query.CreatedDate,
+                    query.TransactionType,
+                    query.TransactionType == "+" ? "Entrada" : "Saída",
+                    query.ProductsEntry.Sum(p => p.Quantity * p.CostValue),
+                    productsEntry.Select(p => new ProductEntryResponse(
+                        p.Id, p.ProductEntryHeaderId,
+                        p.Product.Id, 
+                        p.Product.Code, 
+                        p.Product.Name, 
+                        p.CostValue, 
+                        p.Quantity,
+                        p.CostValue * p.Quantity)).ToList());
+
+            return productEntryHeaderList;
+        }
+
         public async Task<ProductEntryHeaderResponse?> GetByCodeAsync(string code)
         {
             var productEntryHeader = await _context.ProductEntryHeaders.Include("Employee").Include("Supplier").Include("ProductEntry")
@@ -54,7 +97,12 @@ namespace Application.Services
                         .Select(p => new ProductEntryResponse(
                             p.Id, 
                             p.ProductEntryHeaderId, 
-                            p.ProductId, p.Product.Code, p.Product.Name, p.CostValue, p.Quantity)).ToList()
+                            p.ProductId, 
+                            p.Product.Code, 
+                            p.Product.Name, 
+                            p.CostValue, 
+                            p.Quantity,
+                            p.CostValue * p.Quantity)).ToList()
                 ))
                 .AsNoTracking().FirstOrDefaultAsync();
 

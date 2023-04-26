@@ -4,8 +4,11 @@
         Guid Id, 
         string Code, 
         string EmployeeName, 
+        Guid SupplierId,
         string SupplierName, 
-        DateTime? Date, 
+        DateTime? Date,
+        string TransactionTypeId,
         string TransactionType,
-        decimal TotalValue);
+        decimal TotalValue, 
+        List<ProductEntryResponse>? ProductsEntry);
 }

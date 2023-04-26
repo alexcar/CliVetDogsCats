@@ -16,9 +16,9 @@
             ProductsEntry = productsEntry;
         }
 
-        public string Code { get; private set; }
+        public string Code { get; set; }
         public Guid EmployeeId { get; set; }
-        public string TransactionType { get; private set; }
+        public string TransactionType { get; set; }
         public Employee Employee { get; set; }
         public Guid SupplierId { get; set; }
         public Supplier Supplier { get; set; }
