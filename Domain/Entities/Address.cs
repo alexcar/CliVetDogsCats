@@ -7,6 +7,19 @@
             
         }
 
+        public Address(Guid id, string zipCode, string streetAddress, string number, string? complement, string neighborhood, string city, string state, string country)
+        {
+            Id = id;
+            ZipCode = zipCode;
+            StreetAddress = streetAddress;
+            Number = number;
+            Complement = complement;
+            Neighborhood = neighborhood;
+            City = city;
+            State = state;
+            Country = country;
+        }
+
         public Address(string zipCode, string streetAddress, string number, string? complement, string neighborhood, string city, string state, string country)
         {
             ZipCode = zipCode;
@@ -29,5 +42,21 @@
         public string Country { get; set; }        
 
         public IEnumerable<Employee> Employees { get; set; } = new List<Employee>();
+
+        public void Update(
+            Guid id, string zipCode, string streetAddress, 
+            string number, string? complement, string neighborhood, 
+            string city, string state, string country)
+        {
+            Id = id;
+            ZipCode = zipCode;
+            StreetAddress = streetAddress;
+            Number = number; 
+            Complement = complement; 
+            Neighborhood = neighborhood; 
+            City = city; 
+            State = state; 
+            Country = country;
+        }
     }
 }

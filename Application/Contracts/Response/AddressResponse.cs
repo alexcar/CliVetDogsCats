@@ -2,6 +2,10 @@
 {
     public class AddressResponse
     {
+        public AddressResponse()
+        {
+            
+        }
         public AddressResponse(Guid id, string? zipCode, string? streetAddress, string? number, string? complement, string? neighborhood, string? city, string? state, string? country)
         {
             Id = id;

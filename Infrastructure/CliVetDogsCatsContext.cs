@@ -34,5 +34,11 @@ namespace Infrastructure
         public DbSet<Brand> Brands { get; set; }
         public DbSet<ProductEntryHeader> ProductEntryHeaders { get; set; }
         public DbSet<ProductEntry> ProductEntries { get; set; }
+        public DbSet<Tutor> Tutors { get; set; }
+        public DbSet<Animal> Animals { get; set; }
+        public DbSet<AnimalSize> AnimalSizes { get; set; }
+        public DbSet<Species> Species { get; set; }
+        public DbSet<Race> Races { get; set; }
+
     }
 }

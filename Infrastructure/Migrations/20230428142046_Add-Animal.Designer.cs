@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(CliVetDogsCatsContext))]
-    partial class CliVetDogsCatsContextModelSnapshot : ModelSnapshot
+    [Migration("20230428142046_Add-Animal")]
+    partial class AddAnimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,9 +101,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("1");
 
-                    b.Property<Guid>("AnimalSizeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
@@ -127,10 +127,8 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("RaceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Sexo")
-                        .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                    b.Property<Guid>("SizeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SpeciesId")
                         .HasColumnType("uniqueidentifier");
@@ -143,9 +141,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnimalSizeId");
-
                     b.HasIndex("RaceId");
+
+                    b.HasIndex("SizeId");
 
                     b.HasIndex("SpeciesId");
 
@@ -733,15 +731,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Animal", b =>
                 {
-                    b.HasOne("Domain.Entities.AnimalSize", "Size")
-                        .WithMany()
-                        .HasForeignKey("AnimalSizeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Race", "Race")
                         .WithMany()
                         .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.AnimalSize", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

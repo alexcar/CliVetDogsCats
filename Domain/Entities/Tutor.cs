@@ -2,23 +2,72 @@
 {
     public class Tutor : BaseEntity
     {
-        public Tutor(string? name, string? cpf, string? rg, string? phone, string? cellPhone, string? dayMonthBirth, string? comments)
+        public Tutor()
+        {
+            
+        }
+
+        public Tutor(
+            string name, 
+            string cpf, 
+            string rg, 
+            string? phone, 
+            string cellPhone, 
+            string email,
+            string? dayMonthBirth, 
+            string? comments)
         {
             Name = name;
             Cpf = cpf;
             Rg = rg;
             Phone = phone;
             CellPhone = cellPhone;
+            Email = email;
             DayMonthBirth = dayMonthBirth;
             Comments = comments;
         }
 
-        public string? Name { get; set; }
-        public string? Cpf { get; set; }
-        public string? Rg { get; set; }
-        public string? Phone { get; set; }
-        public string? CellPhone { get; set; }
-        public string? DayMonthBirth { get; set; }
-        public string? Comments { get; set; }
+        public string Name { get; private set; }
+        public string Cpf { get; private set; }
+        public string Rg { get; private set; }
+        public string? Phone { get; private set; }
+        public string CellPhone { get; private set; }
+        public string Email { get; private set; }
+        public string? DayMonthBirth { get; private set; }
+        public string? Comments { get; private set; }
+        public Guid AddressId { get; set; }
+        public Address Address { get; set; } = new Address();
+
+        public void AddAddress(Address address)
+        {
+            Address = address;
+        }
+
+        public void UpdateAddress(Address address) 
+        {
+            Address = address;
+        }
+
+        public void Update(
+            Guid id,
+            string name,
+            string cpf,
+            string rg,
+            string phone,
+            string cellPhone,
+            string email,
+            string dayMonthBirth,
+            string comments)
+        {
+            Id = id;
+            Name = name;
+            Cpf = cpf;
+            Rg = rg;
+            Phone = phone;
+            CellPhone = cellPhone;
+            Email = email;
+            DayMonthBirth = dayMonthBirth;
+            Comments = comments;            
+        }
     }
 }

@@ -1,6 +1,5 @@
 using Application.Interfaces;
 using Application.Services;
-using Domain.Entities;
 using FluentValidation;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +32,11 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductEntryService, ProductEntryService>();
+builder.Services.AddScoped<ITutorService, TutorService>();
+builder.Services.AddScoped<IAnimalService, AnimalService>();
+builder.Services.AddScoped<ISpeciesService, SpeciesService>();
+builder.Services.AddScoped<IRaceService, RaceService>();
+builder.Services.AddScoped<IAnimalSizeService, AnimalSizeService>();
 
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(options =>

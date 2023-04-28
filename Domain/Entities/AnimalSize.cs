@@ -1,8 +1,8 @@
 ﻿namespace Domain.Entities
 {
-    public class Race : BaseEntity
+    public class AnimalSize : BaseEntity
     {
-        public Race(string name)
+        public AnimalSize(string name)
         {
             Name = name;
         }
