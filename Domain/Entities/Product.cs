@@ -34,5 +34,6 @@
         public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
         public IEnumerable<ProductEntry> ProductsEntry { get; set; } = new List<ProductEntry>();
+        public List<Schedule> Schedules { get; } = new();
     }
 }

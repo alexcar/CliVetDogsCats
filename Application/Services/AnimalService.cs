@@ -48,6 +48,18 @@ namespace Application.Services
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<List<AnimalListResponse>> GetByTutorIdAsync(Guid id)
+        {
+            return await _context.Animals
+                .Include(x => x.Tutor)
+                .Include(x => x.Species)
+                .Include(x => x.Race)
+                .Where(x => x.Active == true && x.TutorId == id)
+                .Select(p => new AnimalListResponse(p.Id, p.Name, p.Tutor.Name, p.Species.Name, p.Race.Name, p.Coat))
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<AnimalResponse> CreateAsync(CreateAnimalRequest request)
         {
             var animal = new Animal(request.Name, request.Coat, request.Sexo, request.BirthDate, request.Weigth,

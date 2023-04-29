@@ -7,6 +7,7 @@ namespace Application.Interfaces
     {
         Task<List<AnimalListResponse>> GetAllAsync();
         Task<AnimalResponse?> GetByIdAsync(Guid id);
+        Task<List<AnimalListResponse>> GetByTutorIdAsync(Guid id);
         Task<AnimalResponse> CreateAsync(CreateAnimalRequest request);
         Task<AnimalResponse> UpdateAsync(UpdateAnimalRequest request);
         Task DeleteAsync(Guid id);

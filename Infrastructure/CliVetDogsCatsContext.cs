@@ -23,6 +23,16 @@ namespace Infrastructure
                     .ToList()
                     .ForEach(fk => fk.DeleteBehavior = DeleteBehavior.NoAction);
             }
+
+            modelBuilder.Entity<Schedule>()
+                .HasMany(e => e.Products)
+                .WithMany(e => e.Schedules)
+                .UsingEntity<ScheduleProduct>();
+
+            modelBuilder.Entity<Schedule>()
+                .HasMany(e => e.Services)
+                .WithMany(e => e.Schedules)
+                .UsingEntity<ScheduleService>();
         }
 
         public DbSet<Employee> Employees { get; set; }
@@ -39,6 +49,11 @@ namespace Infrastructure
         public DbSet<AnimalSize> AnimalSizes { get; set; }
         public DbSet<Species> Species { get; set; }
         public DbSet<Race> Races { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }        
+        public DbSet<ScheduleStatus> ScheduleStatus { get; set; }        
+        public DbSet<ScheduleProduct> ScheduleProducts { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<ScheduleService> ScheduleServices { get; set; }
 
     }
 }

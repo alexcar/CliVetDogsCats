@@ -2,13 +2,18 @@
 {
     public class Service : BaseEntity
     {
-        public Service(string? name, decimal? value)
+        public Service()
+        {
+            
+        }
+        public Service(string name, decimal saleValue)
         {
             Name = name;
-            Value = value;
+            SaleValue = saleValue;
         }
 
-        public string? Name { get; set; }
-        public decimal? Value { get; set; }
+        public string Name { get; set; }
+        public decimal SaleValue { get; set; }
+        public List<Schedule> Schedules { get; } = new();
     }
 }

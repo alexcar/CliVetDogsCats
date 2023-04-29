@@ -2,11 +2,11 @@
 {
     public class ScheduleStatus : BaseEntity
     {
-        public ScheduleStatus(string? name)
+        public ScheduleStatus(string name)
         {
             Name = name;
         }
 
-        public string? Name { get; set; }
+        public string Name { get; set; }
     }
 }
