@@ -2,6 +2,10 @@
 {
     public class Race : BaseEntity
     {
+        public Race()
+        {
+            
+        }
         public Race(string name)
         {
             Name = name;

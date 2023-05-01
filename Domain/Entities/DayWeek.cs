@@ -2,6 +2,10 @@
 {
     public class DayWeek : BaseEntity
     {
+        public DayWeek()
+        {
+            
+        }
         public DayWeek(string? name)
         {
             Name = name;

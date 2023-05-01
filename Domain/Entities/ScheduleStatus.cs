@@ -2,6 +2,10 @@
 {
     public class ScheduleStatus : BaseEntity
     {
+        public ScheduleStatus()
+        {
+            
+        }
         public ScheduleStatus(string name)
         {
             Name = name;

@@ -2,6 +2,12 @@
 {
     public class EmployeeResponse
     {
+        public EmployeeResponse(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         public EmployeeResponse(
             Guid id, string name, string cpf, string rg, string gender, string phone, 
             string cellPhone, string email, bool isVeterinarian, DateTime admissionDate, 

@@ -2,6 +2,10 @@
 {
     public class Species : BaseEntity
     {
+        public Species()
+        {
+            
+        }
         public Species(string name)
         {
             Name = name;

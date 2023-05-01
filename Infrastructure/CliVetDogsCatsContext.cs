@@ -33,27 +33,26 @@ namespace Infrastructure
                 .HasMany(e => e.Services)
                 .WithMany(e => e.Schedules)
                 .UsingEntity<ScheduleService>();
-        }
-
-        public DbSet<Employee> Employees { get; set; }
+        }        
+        
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<WorkShift> WorkShifts { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Brand> Brands { get; set; }
-        public DbSet<ProductEntryHeader> ProductEntryHeaders { get; set; }
-        public DbSet<ProductEntry> ProductEntries { get; set; }
-        public DbSet<Tutor> Tutors { get; set; }
         public DbSet<Animal> Animals { get; set; }
         public DbSet<AnimalSize> AnimalSizes { get; set; }
-        public DbSet<Species> Species { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductEntry> ProductEntries { get; set; }
+        public DbSet<ProductEntryHeader> ProductEntryHeaders { get; set; }
         public DbSet<Race> Races { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }        
-        public DbSet<ScheduleStatus> ScheduleStatus { get; set; }        
+        public DbSet<Schedule> Schedules { get; set; }
         public DbSet<ScheduleProduct> ScheduleProducts { get; set; }
-        public DbSet<Service> Services { get; set; }
         public DbSet<ScheduleService> ScheduleServices { get; set; }
-
+        public DbSet<ScheduleStatus> ScheduleStatus { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<Species> Species { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Tutor> Tutors { get; set; }
+        public DbSet<WorkShift> WorkShifts { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Application.Exceptions;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Application.Services
 {
@@ -69,6 +70,53 @@ namespace Application.Services
                 .Where(x => (x.Name.Contains(term) || x.Cpf == term) && x.Active == true)
                 .Select(p => new EmployeeListResponse(
                     p.Id, p.Name, p.Cpf, p.CellPhone, p.IsVeterinarian)).AsNoTracking().ToListAsync();
+
+            return response;
+        }
+
+        public async Task<List<EmployeeResponse>?> GetAllVeterinarianAsync()
+        {
+            return await _context.Employees
+                .Where(x => x.Active == true && x.IsVeterinarian == true)
+                .Select(p => new EmployeeResponse(p .Id, p.Name))
+                .AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<EmployeeResponse>?> GetVeterinariansByDutyDateAsync(DateTime dutyDate, byte hour)
+        {
+            var dayOfWeek = dutyDate.DayOfWeek;
+            var foo = dayOfWeek.HasFlag(DayOfWeek.Monday);
+            
+            var query = _context.Employees
+                .Include(p => p.WorkShift)
+                .Where(x => x.Active == true);
+            
+            switch (dayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    query = query.Where(x => x.WorkShift!.Monday && (hour >= x.WorkShift!.MondayFrom && hour <= x.WorkShift!.MondayTo));
+                    break;
+                case DayOfWeek.Tuesday:
+                    query = query.Where(x => x.WorkShift!.Tuesday && (hour >= x.WorkShift!.TuesdayFrom && hour <= x.WorkShift!.TuesdayTo));
+                    break;
+                case DayOfWeek.Wednesday:
+                    query = query.Where(x => x.WorkShift!.Wednesday && (hour >= x.WorkShift!.WednesdayFrom && hour <= x.WorkShift!.WednesdayTo));
+                    break;
+                case DayOfWeek.Thursday:
+                    query = query.Where(x => x.WorkShift!.Thursday && (hour >= x.WorkShift!.ThursdayFrom && hour <= x.WorkShift!.ThursdayTo));
+                    break;
+                case DayOfWeek.Friday:
+                    query = query.Where(x => x.WorkShift!.Friday && (hour >= x.WorkShift!.FridayFrom && hour <= x.WorkShift!.FridayTo));
+                    break;
+                case DayOfWeek.Saturday:
+                    query = query.Where(x => x.WorkShift!.Saturday && (hour >= x.WorkShift!.SaturdayFrom && hour <= x.WorkShift!.SaturdayTo));
+                    break;
+                case DayOfWeek.Sunday:
+                    query = query.Where(x => x.WorkShift!.Sunday && (hour >= x.WorkShift!.SundayFrom && hour <= x.WorkShift!.SundayTo));
+                    break;
+            }
+
+            var response = await query.Select(p => new EmployeeResponse(p.Id, p.Name)).AsNoTracking().ToListAsync();
 
             return response;
         }

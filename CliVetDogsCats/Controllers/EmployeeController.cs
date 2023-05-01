@@ -15,6 +15,7 @@ namespace CliVetDogsCats.API.Controllers
         private readonly ILoggerManager _logger;
         private readonly IValidator<CreateEmployeeRequest> _createValidator;
         private readonly IValidator<UpdateEmployeeRequest> _updateValidate;
+        private readonly IValidator<GetVetByDutyDateRequest> _getVetByDutyDateRequest;
 
         public EmployeeController(
             IEmployeeService service, 
@@ -49,6 +50,27 @@ namespace CliVetDogsCats.API.Controllers
         public async Task<IActionResult> GetByTerm(string term)
         {
             var result = await _service.GetByTermAsync(term);
+
+            return Ok(result);
+        }
+
+        [HttpGet("getVetByDutyDate/{dutyDate}/{hour}")]
+        public async Task<IActionResult> GetVeterinariansByDutyDate(DateTime dutyDate, byte hour)
+        {
+            var getVetByDutyDateRequest = new GetVetByDutyDateRequest();
+            getVetByDutyDateRequest.dutyDate = dutyDate;
+            getVetByDutyDateRequest.hour = hour;
+
+            var validationResult = await _getVetByDutyDateRequest.ValidateAsync(getVetByDutyDateRequest);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .Select(x => new ErrorResponse(x.ErrorCode, x.ErrorMessage)).ToList();
+                return BadRequest(errors);
+            }
+
+            var result = await _service.GetVeterinariansByDutyDateAsync(dutyDate, hour);
 
             return Ok(result);
         }
