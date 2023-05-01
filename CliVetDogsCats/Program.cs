@@ -38,6 +38,7 @@ builder.Services.AddScoped<ISpeciesService, SpeciesService>();
 builder.Services.AddScoped<IRaceService, RaceService>();
 builder.Services.AddScoped<IAnimalSizeService, AnimalSizeService>();
 builder.Services.AddScoped<IScheduleStatusService, ScheduleStatusService>();
+builder.Services.AddScoped<IScheduleServiceService, ScheduleServiceService>();
 
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(options =>
