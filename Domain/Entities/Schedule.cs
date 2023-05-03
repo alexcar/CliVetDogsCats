@@ -6,12 +6,19 @@
         {
             
         }
-        public Schedule(DateTime scheduleDate, byte hour, string tutorComments, string scheduleComments)
+        public Schedule(
+            DateTime scheduleDate, byte hour, string tutorComments, 
+            string scheduleComments, Guid scheduleStatusId, Guid employeeId, Guid tutorId,
+            Guid animalId)
         {
             ScheduleDate = scheduleDate;
             Hour = hour;
             TutorComments = tutorComments;
             ScheduleComments = scheduleComments;
+            EmployeeId = employeeId;
+            ScheduleStatusId = scheduleStatusId;
+            TutorId = tutorId;
+            AnimalId = animalId;
         }
 
         public DateTime ScheduleDate { get; set; }
@@ -26,7 +33,9 @@
         public Tutor Tutor { get; set; }
         public Guid AnimalId { get; set; }
         public Animal Animal { get; set; }
-        
+        public DateTime? ScheduleStart { get; set; }
+        public DateTime? ScheduleEnd { get; set; }
+        public DateTime? ScheduleCancellation { get; set; }
         public List<Product> Products { get; } = new();
         public List<Service> Services { get; } = new();
     }
