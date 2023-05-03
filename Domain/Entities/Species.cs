@@ -12,5 +12,6 @@
         }
 
         public string Name { get; private set; }
+        public IEnumerable<Race> Races { get; set; } = new List<Race>();
     }
 }

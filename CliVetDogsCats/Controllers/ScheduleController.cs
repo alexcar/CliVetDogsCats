@@ -59,7 +59,7 @@ namespace CliVetDogsCats.API.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("scheduleStart")]
         public async Task<IActionResult> ScheduleStart([FromBody] ScheduleStartRequest request)
         {
             var validationResult = await _scheduleStartValidator.ValidateAsync(request);
@@ -76,7 +76,7 @@ namespace CliVetDogsCats.API.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("scheduleEnd")]
         public async Task<IActionResult> ScheduleEnd([FromBody] ScheduleEndRequest request)
         {
             var validationResult = await _scheduleEndValidator.ValidateAsync(request);
@@ -93,7 +93,7 @@ namespace CliVetDogsCats.API.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("scheduleCancellation")]
         public async Task<IActionResult> ScheduleCancellation([FromBody] ScheduleCancellationRequest request)
         {
             var validationResult = await _scheduleCancellationValidator.ValidateAsync(request);

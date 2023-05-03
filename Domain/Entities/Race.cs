@@ -12,5 +12,7 @@
         }
 
         public string Name { get; set; }
+        public Guid SpeciesId { get; set; }
+        public Species Species { get; set; } = new Species();
     }
 }
