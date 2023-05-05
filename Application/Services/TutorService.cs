@@ -36,7 +36,7 @@ namespace Application.Services
                 .Where(x => x.Id == id && x.Active == true)
                 .Select(p => new TutorResponse(
                     p.Id, p.Name, p.Cpf, p.Rg, p.Phone, p.CellPhone, 
-                    p.Email, p.DayMonthBirth, p.Comments, 
+                    p.Email, p.DayMonthBirth.Substring(0,2), p.DayMonthBirth.Substring(2,2), p.Comments, p.Active,
                     new AddressResponse(
                         p.Address.Id, p.Address.ZipCode, p.Address.StreetAddress, 
                         p.Address.Number, p.Address.Complement, p.Address.Neighborhood, 
@@ -58,17 +58,17 @@ namespace Application.Services
             var tutor = new Tutor(
                 request.Name, request.Cpf, request.Rg, 
                 request.Phone, request.CellPhone, request.Email, 
-                request.DayMonthBirth, request.Comments);
+                request.DayBirth + request.MonthBirth, request.Comments);
             
             tutor.AddAddress(new Address(request.Address.ZipCode, request.Address.StreetAddress,
                 request.Address.Number, request.Address.Complement, request.Address.Neighborhood,
-                request.Address.City, request.Address.State, "Brasil"));    
+                request.Address.City, request.Address.State, "Brasil"));
 
             await _context.Tutors.AddAsync(tutor);
             await _context.SaveChangesAsync();
 
             var response = new TutorResponse(tutor.Id, tutor.Name, tutor.Cpf, tutor.Rg, tutor.Phone, tutor.CellPhone,
-                tutor.Email, tutor.DayMonthBirth, tutor.Comments,
+                tutor.Email, request.DayBirth, request.MonthBirth, tutor.Comments, tutor.Active,
                 new AddressResponse(tutor.Address.Id, tutor.Address.ZipCode, tutor.Address.StreetAddress,
                 tutor.Address.Number, tutor.Address.Complement, tutor.Address.Neighborhood,
                 tutor.Address.City, tutor.Address.State, tutor.Address.Country));
@@ -101,7 +101,7 @@ namespace Application.Services
                 tutor.Id,
                 request.Name, request.Cpf, request.Rg, 
                 request.Phone, request.CellPhone, request.Email, 
-                request.DayMonthBirth, request.Comments);            
+                request.DayBirth + request.MonthBirth, request.Comments, request.Active);            
 
             tutor.Address.ZipCode = request.Address.ZipCode;
             tutor.Address.StreetAddress = request.Address.StreetAddress;
@@ -109,15 +109,14 @@ namespace Application.Services
             tutor.Address.Complement = request.Address.Complement;
             tutor.Address.Neighborhood = request.Address.Neighborhood;
             tutor.Address.City = request.Address.City;
-            tutor.Address.State = request.Address.State;
-            tutor.Address.Country = request.Address.Country;
+            tutor.Address.State = request.Address.State;            
 
             _context.Tutors.Update(tutor);
             await _context.SaveChangesAsync();
 
             var response = new TutorResponse(tutor.Id, tutor.Name, tutor.Cpf, 
                 tutor.Rg, tutor.Phone, tutor.CellPhone,
-                tutor.Email, tutor.DayMonthBirth, tutor.Comments,
+                tutor.Email, request.DayBirth, request.MonthBirth, tutor.Comments, tutor.Active, 
                 new AddressResponse(tutor.Address.Id, tutor.Address.ZipCode, tutor.Address.StreetAddress,
                 tutor.Address.Number, tutor.Address.Complement, tutor.Address.Neighborhood, 
                 tutor.Address.City, tutor.Address.State, tutor.Address.Country));

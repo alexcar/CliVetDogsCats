@@ -8,6 +8,8 @@
         public string Phone { get; set; }
         public string CellPhone { get; set; }
         public string Email { get; set; }
+        public string DayBirth { get; set; }
+        public string MonthBirth { get; set; }
         public string DayMonthBirth { get; set; }
         public string Comments { get; set; }
         public bool Active { get; set; }        

@@ -57,7 +57,8 @@
             string cellPhone,
             string email,
             string dayMonthBirth,
-            string comments)
+            string comments,
+            bool active)
         {
             Id = id;
             Name = name;
@@ -68,6 +69,7 @@
             Email = email;
             DayMonthBirth = dayMonthBirth;
             Comments = comments;            
+            Active = active;
         }
     }
 }

@@ -12,8 +12,10 @@ namespace Application.Contracts.Response
             string phone,
             string cellPhone,
             string email,
-            string dayMonthBirth,
+            string dayBirth,
+            string monthBirth,
             string comments,
+            bool? active,
             AddressResponse address)
         {
             Id = id;
@@ -23,8 +25,10 @@ namespace Application.Contracts.Response
             Phone = phone;
             CellPhone = cellPhone;
             Email = email;
-            DayMonthBirth = dayMonthBirth;
+            DayBirth = dayBirth;
+            MonthBirth = monthBirth;
             Comments = comments;
+            Active = active;
             Address = address;
         }
 
@@ -35,8 +39,10 @@ namespace Application.Contracts.Response
         public string Phone { get; private set; }
         public string CellPhone { get; private set; }
         public string Email { get; private set; }
-        public string DayMonthBirth { get; private set; }
+        public string DayBirth { get; private set; }
+        public string MonthBirth { get; private set; }
         public string Comments { get; private set; }
+        public bool? Active { get; private set; }
         public AddressResponse Address { get; set; } = new AddressResponse();
     }
 }
