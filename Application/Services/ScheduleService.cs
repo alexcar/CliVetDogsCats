@@ -32,7 +32,7 @@ namespace Application.Services
                 .Include(x => x.ScheduleStatus)
                 .Where(x => x.Active == true) 
                 .Select(p => new ScheduleListResponse(
-                    p.Id, p.Employee.Name, p.Animal.Name, p.ScheduleDate, p.Hour, p.ScheduleStatus.Name))
+                    p.Id, p.Tutor.Name, p.Employee.Name, p.Animal.Name, p.ScheduleDate, p.Hour, p.ScheduleStatus.Name))
                 .AsNoTracking().ToListAsync();
         }
 
@@ -65,7 +65,6 @@ namespace Application.Services
                     _context.Products
                         .Where(p => p.Active == true)
                         .Select(p => new ScheduleProductResponse(p.Id, p.Name, p.SaleValue)).AsNoTracking().ToList(),
-
                     _context.ScheduleServices
                         .Where(x => x.ScheduleId == id)
                         .Join(_context.Services,
@@ -94,6 +93,8 @@ namespace Application.Services
             await _context.Schedules.AddAsync(schedule);
             await _context.SaveChangesAsync();
         }
+
+
 
         public async Task ScheduleStart(ScheduleStartRequest request)
         {

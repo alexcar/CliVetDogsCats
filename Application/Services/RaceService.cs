@@ -21,5 +21,13 @@ namespace Application.Services
                 .Select(x => new RaceResponse(x.Id, x.Name))
                 .ToListAsync();
         }
+
+        public async Task<List<RaceResponse>> GetRaceBySpeciesIdAsync(Guid id)
+        {
+            return await _context.Races
+                .Where(x => x.Active == true && x.SpeciesId == id)
+                .Select(x => new RaceResponse(x.Id, x.Name))
+                .ToListAsync();
+        }
     }
 }

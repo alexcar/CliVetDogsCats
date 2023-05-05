@@ -19,5 +19,12 @@ namespace CliVetDogsCats.API.Controllers
         {
             return Ok(await _service.GetAllAsync());
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetRaceBySpeciesId(Guid id)
+        {
+            return Ok(await _service.GetRaceBySpeciesIdAsync(id));
+        }
+
     }
 }
