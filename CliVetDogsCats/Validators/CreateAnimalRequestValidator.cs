@@ -10,7 +10,7 @@ namespace CliVetDogsCats.API.Validators
             RuleFor(model => model.Name).NotEmpty().WithMessage("O nome do animal obrigatório");
             RuleFor(model => model.Coat).NotEmpty().WithMessage("O tipo de pelagem do animal obrigatório");
             
-            RuleFor(model => model.Sexo).NotEmpty().WithMessage("O sexo do animal obrigatório")
+            RuleFor(model => model.SexoId).NotEmpty().WithMessage("O sexo do animal obrigatório")
                 .Must(x => x.Length == 1).WithMessage("Informe M ou F para o sexo");
 
             RuleFor(model => model.BirthDate).NotEmpty().WithMessage("A data de nascimento do animal obrigatório");

@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
         public string Coat { get; set; }
-        public string Sexo { get; set; }
+        public string SexoId { get; set; }
         public DateTime BirthDate { get; set; }
         public decimal Weigth { get; set; }
         public string? Comments { get; set; }

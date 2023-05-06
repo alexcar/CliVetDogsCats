@@ -4,14 +4,14 @@
     {
         public AnimalResponse(
             Guid id, string name, string coat, 
-            string sexo, DateTime birthDate, decimal weigth, 
+            string sexoId, DateTime birthDate, decimal weigth, 
             string? comments, Guid tutorId, Guid speciesId, 
-            Guid raceId, Guid animalSizeId)
+            Guid raceId, Guid animalSizeId, bool? active)
         {
             Id = id;
             Name = name;
             Coat = coat;
-            Sexo = sexo;
+            SexoId = sexoId;
             BirthDate = birthDate;
             Weigth = weigth;
             Comments = comments;
@@ -19,18 +19,20 @@
             SpeciesId = speciesId;
             RaceId = raceId;
             AnimalSizeId = animalSizeId;
+            Active = active;
         }
 
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Coat { get; private set; }
-        public string Sexo { get; private set; }
+        public string SexoId { get; private set; }
         public DateTime BirthDate { get; private set; }
         public decimal Weigth { get; private set; }
         public string? Comments { get; private set; }
         public Guid TutorId { get; private set; }
         public Guid SpeciesId { get; private set; }        
         public Guid RaceId { get; private set; }        
-        public Guid AnimalSizeId { get; private set; }        
+        public Guid AnimalSizeId { get; private set; }
+        public bool? Active { get; set; }
     }
 }

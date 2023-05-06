@@ -43,7 +43,7 @@ namespace Application.Services
                 .Select(p => new AnimalResponse(
                     p.Id, p.Name, p.Coat, p.Sexo, p.BirthDate, 
                     p.Weigth, p.Comments, p.TutorId, p.SpeciesId, 
-                    p.RaceId, p.AnimalSizeId))
+                    p.RaceId, p.AnimalSizeId, p.Active))
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
@@ -62,14 +62,14 @@ namespace Application.Services
 
         public async Task<AnimalResponse> CreateAsync(CreateAnimalRequest request)
         {
-            var animal = new Animal(request.Name, request.Coat, request.Sexo, request.BirthDate, request.Weigth,
+            var animal = new Animal(request.Name, request.Coat, request.SexoId, request.BirthDate, request.Weigth,
                 request.Comments, request.TutorId, request.SpeciesId, request.RaceId, request.AnimalSizeId);
 
             await _context.Animals.AddAsync(animal);
             await _context.SaveChangesAsync();
 
             return new AnimalResponse(animal.Id, animal.Name, animal.Coat, animal.Sexo, animal.BirthDate, animal.Weigth,
-                animal.Comments, animal.TutorId, animal.SpeciesId, animal.RaceId, animal.AnimalSizeId);
+                animal.Comments, animal.TutorId, animal.SpeciesId, animal.RaceId, animal.AnimalSizeId, animal.Active);
         }
 
         public async Task<AnimalResponse> UpdateAsync(UpdateAnimalRequest request)
@@ -81,7 +81,7 @@ namespace Application.Services
 
             animal.Name = request.Name;
             animal.Coat = request.Coat;
-            animal.Sexo = request.Sexo;
+            animal.Sexo = request.SexoId;
             animal.BirthDate = request.BirthDate;
             animal.Weigth = request.Weigth;
             animal.Comments = request.Comments;
@@ -94,7 +94,7 @@ namespace Application.Services
             await _context.SaveChangesAsync();
 
             return new AnimalResponse(animal.Id, animal.Name, animal.Coat, animal.Sexo, animal.BirthDate, animal.Weigth,
-                animal.Comments, animal.TutorId, animal.SpeciesId, animal.RaceId, animal.AnimalSizeId);
+                animal.Comments, animal.TutorId, animal.SpeciesId, animal.RaceId, animal.AnimalSizeId, animal.Active);
         }
 
         public async Task DeleteAsync(Guid id)
