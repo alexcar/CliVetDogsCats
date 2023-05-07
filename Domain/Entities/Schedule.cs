@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.Data;
+
+namespace Domain.Entities
 {
     public class Schedule : BaseEntity
     {
@@ -38,5 +40,19 @@
         public DateTime? ScheduleCancellation { get; set; }
         public List<Product> Products { get; } = new();
         public List<Service> Services { get; } = new();
+        
+        public void Update(
+            DateTime scheduleDate, 
+            byte hour, 
+            string scheduleComments, 
+            Guid employeeId, 
+            Guid scheduleStatusId)
+        {
+            ScheduleDate = scheduleDate;
+            Hour = hour;
+            ScheduleComments = scheduleComments;
+            EmployeeId = employeeId;
+            ScheduleStatusId = scheduleStatusId;
+        }
     }
 }

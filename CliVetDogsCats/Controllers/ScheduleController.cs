@@ -12,22 +12,25 @@ namespace CliVetDogsCats.API.Controllers
     {
         private readonly IScheduleService _service;
         private readonly IValidator<CreateScheduleRequest> _createValidator;
+        private readonly IValidator<UpdateScheduleRequest> _updateValidator;
         private readonly IValidator<ScheduleStartRequest> _scheduleStartValidator;
         private readonly IValidator<ScheduleEndRequest> _scheduleEndValidator;
         private readonly IValidator<ScheduleCancellationRequest> _scheduleCancellationValidator;
 
         public ScheduleController(
-            IScheduleService service, 
-            IValidator<CreateScheduleRequest> createValidator, 
-            IValidator<ScheduleStartRequest> scheduleStartValidator, 
-            IValidator<ScheduleEndRequest> scheduleEndValidator, 
-            IValidator<ScheduleCancellationRequest> scheduleCancellationValidator)
+            IScheduleService service,
+            IValidator<CreateScheduleRequest> createValidator,
+            IValidator<ScheduleStartRequest> scheduleStartValidator,
+            IValidator<ScheduleEndRequest> scheduleEndValidator,
+            IValidator<ScheduleCancellationRequest> scheduleCancellationValidator,
+            IValidator<UpdateScheduleRequest> updateValidator)
         {
             _service = service;
             _createValidator = createValidator;
+            _updateValidator = updateValidator;
             _scheduleStartValidator = scheduleStartValidator;
             _scheduleEndValidator = scheduleEndValidator;
-            _scheduleCancellationValidator = scheduleCancellationValidator;
+            _scheduleCancellationValidator = scheduleCancellationValidator;            
         }
 
         [HttpGet]
@@ -56,6 +59,23 @@ namespace CliVetDogsCats.API.Controllers
 
             await _service.CreateAsync(request);
             
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]  UpdateScheduleRequest request)
+        {
+            var validationResult = await _updateValidator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .Select(x => new ErrorResponse(x.ErrorCode, x.ErrorMessage)).ToList();
+                return BadRequest(errors);
+            }
+
+            await _service.UpdateAsync(request);
+
             return NoContent();
         }
 

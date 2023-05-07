@@ -47,6 +47,18 @@ namespace Application.Services
             return response;
         }
 
+        public async Task<List<TutorListResponse>> GetAllTutorsHaveAnimalAsync()
+        {
+            var response = await (from tutor in _context.Tutors
+                           join animal in _context.Animals
+                           on tutor.Id equals animal.TutorId
+                           where tutor.Active == true
+                           select new TutorListResponse(tutor.Id, tutor.Name, tutor.Cpf, tutor.CellPhone))
+                           .Distinct().AsNoTracking().ToListAsync();            
+
+            return response;
+        }
+
         public async Task<TutorResponse> CreateAsync(CreateTutorRequest request)
         {
             if (await CpfAlreadyRegisterd(request.Cpf))

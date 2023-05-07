@@ -94,7 +94,23 @@ namespace Application.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(UpdateScheduleRequest request)
+        {
+            var schedule = await _context.Schedules.FirstOrDefaultAsync(x => x.Id == request.Id && x.Active == true);
 
+            if (schedule == null)
+                throw new EmployeeNotFoundException(entityName, request.Id);
+
+            schedule.Update(
+                request.ScheduleDate, 
+                request.Hour, 
+                request.ScheduleComments, 
+                request.EmployeeId, 
+                request.ScheduleStatusId);
+
+            _context.Schedules.Update(schedule);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task ScheduleStart(ScheduleStartRequest request)
         {

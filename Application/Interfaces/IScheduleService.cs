@@ -8,6 +8,7 @@ namespace Application.Interfaces
         Task<List<ScheduleListResponse>?> GetAllAsync();
         Task<ScheduleResponse?> GetByIdAsync(Guid id);
         Task CreateAsync(CreateScheduleRequest request);
+        Task UpdateAsync(UpdateScheduleRequest request);
         Task ScheduleStart(ScheduleStartRequest request);
         Task ScheduleEnd(ScheduleEndRequest request);
         Task ScheduleCancellation(ScheduleCancellationRequest request);

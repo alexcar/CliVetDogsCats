@@ -3,13 +3,16 @@ using FluentValidation;
 
 namespace CliVetDogsCats.API.Validators
 {
-    public class CreateScheduleRequestValidator : AbstractValidator<CreateScheduleRequest>
+    public class UpdateScheduleRequestValidator : AbstractValidator<UpdateScheduleRequest>
     {
-        public CreateScheduleRequestValidator()
+        public UpdateScheduleRequestValidator()
         {
+            RuleFor(model => model.Id).Must(ValidateGuid.BeAValidGuid)
+                .WithMessage("O Id do schedule é obrigatório");
+            
             RuleFor(model => model.ScheduleDate).NotEmpty()
                 .WithMessage("A data do agendamento é obrigatório");
-            
+
             RuleFor(model => model.Hour).NotEmpty()
                 .WithMessage("A hora do agendamento é obrigatório");
 
@@ -17,13 +20,8 @@ namespace CliVetDogsCats.API.Validators
                 .WithMessage("É obrigatório selecionar um status para o agendamento");
 
             RuleFor(model => model.EmployeeId).NotEmpty()
-                .WithMessage("É obrigatório selecionar um veterinário");
+                .WithMessage("É obrigatório selecionar um veterinário");            
 
-            RuleFor(model => model.TutorId).NotEmpty()
-                .WithMessage("É obrigatório selecionar um tutor para o agendamento");
-
-            RuleFor(model => model.AnimalId).NotEmpty()
-                .WithMessage("É obrigatório selecionar um animal para o agendamento");
         }
     }
 }

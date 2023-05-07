@@ -78,6 +78,16 @@ namespace Application.Services
             return product;
         }
 
+        public async Task<List<ScheduleProductResponse>> GetScheduleProductsAsync()
+        {
+            var response = await _context.Products
+                .Where(x => x.Active == true)
+                .Select(p => new ScheduleProductResponse(p.Id, p.Name, p.SaleValue))
+                .AsNoTracking().ToListAsync();
+
+            return response;
+        }
+
         public async Task<ProductResponse> CreateAsync(CreateProductRequest request)
         {
             if (await CodeAlreadyRegistered(request.Code))
