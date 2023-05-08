@@ -91,6 +91,26 @@ namespace Application.Services
                 request.ScheduleStatusId, request.EmployeeId, request.TutorId, request.AnimalId);
 
             await _context.Schedules.AddAsync(schedule);
+
+            foreach(var service in request.ScheduleServiceSelected)
+            {
+                var scheduleService = new Domain.Entities.ScheduleService();
+                
+                scheduleService.ServiceId = service.ServiceId;
+                scheduleService.ScheduleId = schedule.Id;
+                await _context.ScheduleServices.AddAsync(scheduleService);
+            }
+
+            foreach(var product in request.ScheduleProductSelected)
+            {
+                var scheduleProduct = new Domain.Entities.ScheduleProduct();
+
+                scheduleProduct.ScheduleId = schedule.Id;
+                scheduleProduct.ProductId = product.ProductId;
+                scheduleProduct.Quantity = product.Quantity;
+                await _context.ScheduleProducts.AddAsync(scheduleProduct);
+            }
+
             await _context.SaveChangesAsync();
         }
 

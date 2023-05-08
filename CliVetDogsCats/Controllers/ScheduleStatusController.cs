@@ -1,5 +1,5 @@
-﻿using Application.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Application.Interfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CliVetDogsCats.API.Controllers
@@ -8,9 +8,9 @@ namespace CliVetDogsCats.API.Controllers
     [ApiController]
     public class ScheduleStatusController : ControllerBase
     {
-        private readonly ScheduleStatusService _service;
+        private readonly IScheduleStatusService _service;
 
-        public ScheduleStatusController(ScheduleStatusService service)
+        public ScheduleStatusController(IScheduleStatusService service)
         {
             _service = service;
         }
