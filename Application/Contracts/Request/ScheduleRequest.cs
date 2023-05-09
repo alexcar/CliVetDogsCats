@@ -10,7 +10,7 @@
         public Guid EmployeeId { get; set; }
         public Guid TutorId { get; set; }
         public Guid AnimalId { get; set; }
-        public List<CreateScheduleServiceRequest> ScheduleServiceSelected { get; set; }
-        public List<CreateScheduleProductRequest> ScheduleProductSelected { get; set; }
+        public List<CreateScheduleServiceRequest>? ScheduleServiceSelected { get; set; }
+        public List<CreateScheduleProductRequest>? ScheduleProductSelected { get; set; }
     }
 }

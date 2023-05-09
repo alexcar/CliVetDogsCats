@@ -27,8 +27,8 @@
             EmployeeId = employeeId;
             ScheduleServices = scheduleServices;
             ScheduleProducts = scheduleProducts;
-            SelectedScheduleService = selectedScheduleService;
-            SelectedScheduleProduct = selectedScheduleProduct;
+            ScheduleServiceSelected = selectedScheduleService;
+            ScheduleProductSelected = selectedScheduleProduct;
         }
 
         public Guid ScheduleId { get; set; }
@@ -45,7 +45,7 @@
         public Guid EmployeeId { get; set; }        
         public List<ScheduleServiceResponse> ScheduleServices { get; set; }
         public List<ScheduleProductResponse> ScheduleProducts { get; set; }
-        public List<SelectedScheduleServiceResponse> SelectedScheduleService { get; set; }
-        public List<SelectedScheduleProductResponse> SelectedScheduleProduct { get; set; }
+        public List<SelectedScheduleServiceResponse> ScheduleServiceSelected { get; set; }
+        public List<SelectedScheduleProductResponse> ScheduleProductSelected { get; set; }
     }
 }
