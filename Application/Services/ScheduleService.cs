@@ -108,6 +108,18 @@ namespace Application.Services
                 request.EmployeeId, 
                 request.ScheduleStatusId);
 
+            if (request.ScheduleStatusId == Guid.Parse("F4AD487D-BF8A-458D-A4C4-100099C75976"))
+            {
+                schedule.ScheduleStart = DateTime.Now;
+            } else if (request.ScheduleStatusId == Guid.Parse("8AB52220-627E-4E59-B77E-06F908F5BE97"))
+            {
+                schedule.ScheduleEnd = DateTime.Now;
+            }
+            else if (request.ScheduleStatusId == Guid.Parse("05528A51-6645-4D3B-BCB6-18CD693DF18C"))
+            {
+                schedule.ScheduleCancellation = DateTime.Now;
+            }
+
             _context.Schedules.Update(schedule);
 
             if (request.ScheduleServiceSelected != null)
