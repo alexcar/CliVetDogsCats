@@ -81,6 +81,12 @@ namespace CliVetDogsCats.API.Controllers
             return Ok(await _service.GetAllVeterinarianAsync());
         }
 
+        [HttpGet("report")]
+        public async Task<IActionResult> Report()
+        {
+            return Ok(await _service.ReportAsync());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateEmployeeRequest request)
         {

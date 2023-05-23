@@ -42,6 +42,12 @@ namespace CliVetDogsCats.API.Controllers
             return Ok(await _service.GetByTutorIdAsync(id));
         }
 
+        [HttpGet("report")]
+        public async Task<IActionResult> Report()
+        {
+            return Ok(await _service.ReportAsync());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateAnimalRequest request)
         {

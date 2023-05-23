@@ -57,6 +57,15 @@ namespace Application.Services
                 .AsNoTracking().ToListAsync();
         }
 
+        public async Task<List<SupplierReportResponse>> ReportAsync()
+        {
+            return await _context.Suppliers
+                .Where(x => x.Active == true)
+                .OrderBy(x => x.Trade)
+                .Select(p => new SupplierReportResponse(p.Trade, p.Cnpj, p.Contact, p.Email, p.CellPhone))
+                .AsNoTracking().ToListAsync();
+        }
+
         public async Task<SupplierResponse> CreateAsync(CreateSupplierRequest request)
         {
             if (await CnpjAlreadyRegistered(request.Cnpj))

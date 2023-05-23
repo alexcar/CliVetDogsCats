@@ -2,15 +2,9 @@
 using Application.Contracts.Response;
 using Application.Exceptions;
 using Application.Interfaces;
-using Azure.Core;
 using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -54,8 +48,21 @@ namespace Application.Services
                 .Include(x => x.Tutor)
                 .Include(x => x.Species)
                 .Include(x => x.Race)
+                .OrderBy(x => x.Name)
                 .Where(x => x.Active == true && x.TutorId == id)
                 .Select(p => new AnimalListResponse(p.Id, p.Name, p.Tutor.Name, p.Species.Name, p.Race.Name, p.Coat))
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<List<AnimalReportResponse>> ReportAsync()
+        {
+            return await _context.Animals
+                .Include(x => x.Tutor)
+                .Include(x => x.Species)
+                .Include(x => x.Race)
+                .Where(x => x.Active == true)
+                .Select(p => new AnimalReportResponse(p.Name, p.Tutor.Name, p.Sexo, p.BirthDate, p.Species.Name, p.Race.Name, p.Coat))
                 .AsNoTracking()
                 .ToListAsync();
         }

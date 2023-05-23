@@ -580,7 +580,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("ScheduleProducts");
+                    b.ToTable("ScheduleProducts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ScheduleService", b =>
@@ -595,7 +595,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ScheduleServices");
+                    b.ToTable("ScheduleServices", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ScheduleStatus", b =>

@@ -37,6 +37,7 @@
         public string? Comments { get; private set; }
         public Guid AddressId { get; set; }
         public Address Address { get; set; } = new Address();
+        public IEnumerable<Animal> Animals { get; set; }
 
         public void AddAddress(Address address)
         {

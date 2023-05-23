@@ -6,7 +6,6 @@ using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace Application.Services
 {
@@ -86,6 +85,16 @@ namespace Application.Services
                 .AsNoTracking().ToListAsync();
 
             return response;
+        }
+
+        public async Task<List<ProductReportResponse>> ReportAsync()
+        {
+            return await _context.Products
+                .Include(x => x.Category).Include(x => x.Brand)
+                .Where(x => x.Active == true)
+                .OrderBy(x => x.Category.Name).ThenBy(x => x.Brand.Name).ThenBy(x => x.Name)
+                .Select(p => new ProductReportResponse(p.Code, p.Name, p.Brand.Name, p.Category.Name, p.CostValue, p.SaleValue, p.StockQuantity))
+                .AsNoTracking().ToListAsync();
         }
 
         public async Task<ProductResponse> CreateAsync(CreateProductRequest request)

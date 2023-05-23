@@ -8,6 +8,7 @@ namespace Application.Interfaces
         public Task<List<SupplierListResponse>?> GetAllAsync();
         public Task<SupplierResponse?> GetByIdAsync(Guid id);
         public Task<List<SupplierListResponse>?> GetByTermAsync(string term);
+        public Task<List<SupplierReportResponse>> ReportAsync();
         public Task<SupplierResponse> CreateAsync(CreateSupplierRequest request);
         public Task<SupplierResponse> UpdateAsync(UpdateSupplierRequest request);
         public Task DeleteAsync(Guid id);

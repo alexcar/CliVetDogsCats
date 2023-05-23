@@ -6,7 +6,6 @@ using Application.Exceptions;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace Application.Services
 {
@@ -119,6 +118,15 @@ namespace Application.Services
             var response = await query.Select(p => new EmployeeResponse(p.Id, p.Name)).AsNoTracking().ToListAsync();
 
             return response;
+        }
+
+        public async Task<List<EmployeeReportResponse>> ReportAsync()
+        {
+            return await _context.Employees
+                .Where(x => x.Active == true)
+                .OrderBy(x => x.Name)
+                .Select(p => new EmployeeReportResponse(p.Name, p.Cpf, p.CellPhone, p.Email, p.AdmissionDate, p.IsVeterinarian))
+                .AsNoTracking().ToListAsync();
         }
 
         public async Task<EmployeeResponse> CreateAsync(CreateEmployeeRequest request)

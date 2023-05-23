@@ -59,6 +59,25 @@ namespace Application.Services
             return response;
         }
 
+        public async Task<List<TutorReportResponse>> ReportAsync()
+        {
+            var response = await _context.Tutors
+                .Include(x => x.Animals)
+                .Where(x => x.Active == true)
+                .OrderBy(x => x.Name)
+                .Select(p => new TutorReportResponse(p.Name, p.Cpf, p.Email, p.CellPhone,
+                    p.Animals.Select(p => new AnimalReportResponse(
+                        p.Name, 
+                        p.Tutor.Name, 
+                        p.Sexo, 
+                        p.BirthDate, 
+                        p.Species.Name, 
+                        p.Race.Name, 
+                        p.Coat)).ToList())).AsNoTracking().ToListAsync();
+            
+            return response;
+        }
+
         public async Task<TutorResponse> CreateAsync(CreateTutorRequest request)
         {
             if (await CpfAlreadyRegisterd(request.Cpf))
